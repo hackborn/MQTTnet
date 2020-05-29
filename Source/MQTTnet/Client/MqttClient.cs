@@ -99,6 +99,9 @@ namespace MQTTnet.Client
                     _logger.Verbose("Connection with server established.");
 
                     _publishPacketReceiverQueue = new AsyncQueue<MqttPublishPacket>();
+                    _publishPacketReceiverQueue._logger = _logger;
+                    _publishPacketReceiverQueue.LogInfo();
+
                     _publishPacketReceiverTask = Task.Run(() => ProcessReceivedPublishPackets(backgroundCancellationToken), backgroundCancellationToken);
 
                     _packetReceiverTask = Task.Run(() => TryReceivePacketsAsync(backgroundCancellationToken), backgroundCancellationToken);
